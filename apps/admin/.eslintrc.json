@@ -1,0 +1,58 @@
+{
+  "extends": [
+    "plugin:@nx/react-typescript",
+    "next",
+    "next/core-web-vitals",
+    "../../.eslintrc.json",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime"
+  ],
+  "ignorePatterns": ["!**/*", ".next/**/*", "storybook-static"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@next/next/no-html-link-for-pages": ["error", "apps/admin/pages"]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "ft-flow/space-after-type-colon": 0,
+        "ft-flow/no-types-missing-file-annotation": 0,
+        "ft-flow/generic-spacing": 0,
+        "curly": "error",
+        "eqeqeq": "error",
+        "@typescript-eslint/consistent-type-imports": [
+          "error",
+          { "fixStyle": "inline-type-imports" }
+        ],
+        "@typescript-eslint/method-signature-style": "error",
+        "@typescript-eslint/sort-type-constituents": "error"
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}
