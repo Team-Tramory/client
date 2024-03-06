@@ -2,19 +2,21 @@
 . "$(dirname -- "$0")/_/husky.sh"
 echo 'wait add jira issue number we found from branch name'
 
+# 브랜치 이름을 가져옵니다.
 BRANCH_NAME=$(git symbolic-ref -q HEAD)
-BRANCH_NAME=${BRANCH_NAME##*/} # Remove everything before the last /
+# 브랜치이름에서 필요 없는 것들을 제거해줍니다. 
+BRANCH_NAME=${BRANCH_NAME##*/}
 ISSUE_TICKET=$(echo "$BRANCH_NAME" | sed -n 's/^\([A-Z]*-[0-9]*\)-\(.*\)$/\1/p')
 
-# Check if ISSUE_TICKET is not empty
+# ISSUE_TICKET이 비어있는지 확인합니다.
 if [ -n "$ISSUE_TICKET" ]; then
-  # Output extracted Jira 이슈 티켓 번호
-  echo "Extracted Jira TRA: $ISSUE_TICKET"
+  # 이슈 번호가 존재한다면 Jira 이슈 티켓 + 번호를 붙여줍니다.
+  echo "Extracted Jira Ticket: $ISSUE_TICKET"
 
-  # Read the commit message from the temporary file
+  # 현재 파일에서 commet message를 읽어옵니다.
   COMMIT_MSG_FILE=$1
   COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
 
-  # Prepend Jira 이슈 티켓 번호 to the commit message with a hyphen and remove the space
+  # commit message에 Jira 이슈 티켓 번호를 '-'와 함께 붙여주고 공백을 제거합니다.
   echo "$ISSUE_TICKET-$COMMIT_MSG" > $COMMIT_MSG_FILE
 fi
